@@ -1,0 +1,16 @@
+{% if listado_visitas %}
+    <ul>
+    {% for visita in listado_visitas %}
+     	<h2><center> {{visita.nombre}}</center></h2>
+        <img src="{{ MEDIA_URL }}{{ visita.foto.name }}">
+        <li> {{visita.descripcion}}</li>
+ 		<li> {{visita.likes}}</li>
+
+
+
+
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No hay visitas disponibles.</p>
+{% endif %}
