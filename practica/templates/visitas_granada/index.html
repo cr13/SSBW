@@ -1,0 +1,66 @@
+{% extends 'visitas_granada/plantilla.html' %}
+
+{% load thumbnail %}
+
+
+{% block header_page %}
+	
+	<div class="container text-center">
+	  <h1>Welcome to Scrolling Nav</h1>
+	  <p class="lead">A landing page template freshly redesigned for Bootstrap 4</p>
+	</div>
+	
+{% endblock %}
+
+
+{% block menu_izq %}
+	<h1 class="my-4">Shop Name</h1>
+	<div class="list-group">
+	  <a href="#" class="list-group-item">Category 1</a>
+	  <a href="#" class="list-group-item">Category 2</a>
+	  <a href="#" class="list-group-item">Category 3</a>
+	</div>
+{% endblock %}
+
+{% block cuerpo %}
+
+    <div class="row">
+	{% if listado_visitas %}
+	    {% for visita in listado_visitas %}
+			<div class="col-lg-4 col-md-6 mb-4">
+			<div class="card h-100">
+				{% thumbnail visita.foto "200x180" crop="center" as im %}
+				    
+				    <img class="card-img-top"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" >
+				{% empty %}
+				    <p>No image</p>
+				<!-- <img class="card-img-top" src="{{ MEDIA_URL }}{{ visita.foto.name }}" width="{{ visita.foto.width }}" height="{{ visita.foto.height }}" alt="{{ visita.foto.name }}"> -->
+				{% endthumbnail %}
+			<!-- <img class="card-img-top" src="{{ MEDIA_URL }}{{ visita.foto.name }}" alt="{{ visita.foto.name }}"> -->
+			<!-- <a href="#"></a> -->
+			<div class="card-body">
+			<h4 class="card-title">
+			  <!--<a href="#"></a>-->
+			  {{visita.nombre}}
+			</h4>
+			<h5>$24.99</h5>
+			<p class="card-text">
+				{{visita.descripcion}}
+			</p>
+			<!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p> -->
+			</div>
+			<div class="card-footer">
+			<small class="text-muted">{{visita.likes}}</small>
+			<!-- &#9733; &#9733; &#9733; &#9733; &#9734; -->
+			</div>
+			</div>
+			</div>
+	    {% endfor %}
+		{% else %}
+		    <p>No hay visitas disponibles.</p>
+		{% endif %}
+ 	</div>
+	<!-- /.row -->
+
+{% endblock %}
+

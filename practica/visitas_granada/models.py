@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
+from sorl.thumbnail import ImageField
 from django.template.defaultfilters import slugify
 import os
 
@@ -9,7 +10,8 @@ import os
 
 class Visita(models.Model):
 	nombre = models.CharField(max_length=100)
-	foto = models.FileField(upload_to='fotos', blank=True)
+	foto= ImageField(upload_to='fotos')
+	#foto = models.FileField(upload_to='fotos', blank=True)
 	descripcion = models.CharField(max_length=1000)
 	likes = models.IntegerField(default=0)
 	slug = models.SlugField(unique=True)

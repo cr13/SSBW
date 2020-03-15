@@ -6,7 +6,7 @@ from visitas_granada.models import Visita, Comentario
 
 def index(request):
     listado_visitas = Visita.objects.order_by('-likes')[:5]
-    template = loader.get_template('visitas_granada/listado.html')
+    template = loader.get_template('visitas_granada/index.html')
     context = {
         'listado_visitas': listado_visitas,
     }
