@@ -20,7 +20,11 @@ from django.conf.urls.static import static
 from visitas_granada import views
 
 urlpatterns = [
-	path('', views.index, name='Index'),
+	path('', views.index, name='index'),
+    path('<int:visita_id>/', views.detalle_visita, name='detail'),
+
+    # path(r'^detalle_visita/(?P<visita_name_slug>[\w\-]+)/$', views.detalle_visita, name='Detalle'),
+    # path('articles/<slug:title>/', views.article, name='article-detail'),
     path('admin/', admin.site.urls),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
