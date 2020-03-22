@@ -16,9 +16,9 @@ def index(request):
 
 
 def detalle_visita(request, visita_id):
+    listado_visitas = Visita.objects.order_by('-likes')[:6]
     visita = get_object_or_404(Visita, pk=visita_id)
-    print(visita)
-    return render(request, 'visitas_granada/detalle_visita.html', {'visita': visita})
+    return render(request, 'visitas_granada/detalle_visita.html', {'visita': visita, 'listado_visitas': listado_visitas})
 
 def get_visita(request, visita_name_slug):
 

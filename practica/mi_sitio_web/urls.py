@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from visitas_granada import views
 
 urlpatterns = [
-	path('', views.index, name='index'),
+    path('', views.index, name='index'),
     path('<int:visita_id>/', views.detalle_visita, name='detail'),
 
     # path(r'^detalle_visita/(?P<visita_name_slug>[\w\-]+)/$', views.detalle_visita, name='Detalle'),

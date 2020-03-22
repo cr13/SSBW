@@ -3,43 +3,67 @@
 {% load thumbnail %}
 
 
+{% block header_page %}
+	
+	<div class="container text-center">
+	  <h1>Visita en Granada</h1>
+	  <p class="lead">
+			{% if listado_visitas %}
+			    Se dispone de {{ listado_visitas|length }}
+			{% else %}
+			    0
+			{% endif %}
+	   visitas disponibles</p>
+	</div>
+	
+{% endblock %}
+
+
+{% block menu_izq %}
+	<h1 class="my-4">Visitas</h1>
+	<div class="list-group">
+		{% if listado_visitas %}
+	    	{% for visita in listado_visitas %}
+			  <a href="{% url 'detail' visita.id %}" class="list-group-item"> {{visita.nombre}}</a>
+		    {% endfor %}
+		{% else %}
+		    <p>No hay visitas disponibles.</p>
+		{% endif %}
+			
+	</div>
+{% endblock %}
 
 {% block cuerpo %}
 
     <div class="row">
 	{% if visita %}
-			<div class="col-lg-4 col-md-6 mb-4">
-				<div class="card h-100">
-					{% thumbnail visita.foto "200x180" crop="center" as im %}
-					    
-					    <img class="card-img-top"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" >
-					{% empty %}
-					    <p>No image</p>
-					<!-- <img class="card-img-top" src="{{ MEDIA_URL }}{{ visita.foto.name }}" width="{{ visita.foto.width }}" height="{{ visita.foto.height }}" alt="{{ visita.foto.name }}"> -->
-					{% endthumbnail %}
-					<!-- <img class="card-img-top" src="{{ MEDIA_URL }}{{ visita.foto.name }}" alt="{{ visita.foto.name }}"> -->
-					<!-- <a href="#"></a> -->
-					<div class="card-body">
-						<h4 class="card-title">
-						  <!--<a href="#"></a>-->
-						  {{visita.nombre}}
-						</h4>
-						<h5>$24.99</h5>
-						<p class="card-text">
-							{{visita.descripcion}}
-						</p>
-
-					</div>
-					<div class="card-footer">
-					 	<p>
-					 		{{visita.likes}}
-					 	</p>
-					
-					</div>
-				</div>
-			</div>
+	    <div class="ftco-section ftco-no-pt ftco-no-pb">
+	    	<div class="container">
+	    		<div class="row d-flex no-gutters">
+	    			<div class="col-md-6 d-flex">
+	    				 <!-- style="background-image: url({{ MEDIA_URL }}{{ visita.foto.name }});" -->
+	    				<div class="img d-flex align-items-center justify-content-center py-md-0">
+	    					{% thumbnail visita.foto "450x350" crop="center" as im %} 
+							    <img class="card-img-top"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" >
+							{% empty %}
+							    <p>No image</p>
+	    					{% endthumbnail %}
+	    				</div>
+	    			</div>
+	    			<div class="col-md-6 pl-md-5 pt-md-5">
+	    				<div class="row justify-content-start py-5">
+							<div class="col-md-12 heading-section ftco-animate">
+								<span class="subheading">{{visita.likes}} likes recibidos</span>
+								<h2 class="mb-4">  {{visita.nombre}}</h2>
+								<p>{{visita.descripcion}}</p>
+							</div>
+				        </div>
+			        </div>
+	        	</div>
+	    	</div>
+	    </div>
 	{% else %}
-	    <p>No hay visitas disponibles.</p>
+	    <p>Visita no encontrada.</p>
 	{% endif %}
 
  	</div> 	<!-- /.row -->
