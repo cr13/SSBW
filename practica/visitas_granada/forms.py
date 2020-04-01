@@ -16,3 +16,8 @@ class VisitaForm(forms.ModelForm):
 			'descripcion': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
 			'foto': forms.FileInput()
 		}
+
+		def ModificarVisita(self):
+			cargaVisita=Visita()
+			console.log("---------ModificarVisita-----------Forms---")
+			return cargaVisita.modiVisita(self.cleaned_data)

@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'sorl.thumbnail',
     'crispy_forms',
-
 ]
 
 MIDDLEWARE = [

@@ -1,7 +1,8 @@
 {% extends 'visitas_granada/plantilla.html' %}
 
 {% load thumbnail %}
-
+{% load crispy_forms_tags %}
+           
 
 {% block header_page %}
 	
@@ -58,14 +59,136 @@
 								<p>{{visita.descripcion}}</p>
 							</div>
 				        </div>
+   	    				<div class="row justify-content-start py-5">
+   	    					<div class="col-sm-6">
+						      	<button id="editar" type='button' class="w3-button w3-block w3-indigo"   data-toggle="tooltip" data-placement="top" title="Ver más" > 
+					 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+					 		</button>
+
+						     </div>
+						     <!-- /.col-sm-6 -->
+						     <div class="col-sm-6">
+						       <button id="borrar" type='button' class="w3-button w3-block w3-indigo"   data-toggle="tooltip" data-placement="top" title="Ver más" > 
+					 			<i class="fa fa-trash" aria-hidden="true"></i> Eliminar
+					 		</button>
+						     </div>
+
+   	    				
+					 	</div>
 			        </div>
 	        	</div>
 	    	</div>
 	    </div>
+
+
+
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+
+	    	<!-- Modal content-->
+	    	<div class="modal-content">
+		      	<div class="modal-header">
+		        	<h4 class="modal-title" id="tituloModal">Editar Visita</h4>
+		        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+		     	</div>
+<!-- 		     	          <form action="{% url 'add_visita' %}" method="post" enctype="multipart/form-data">
+ -->
+				<form method="POST" id="formData">
+
+	      	      	<div class="col-md-12 modal-body" id="visita_edit">
+	      	      		{% csrf_token %}
+	        			{{ form_visita|crispy }}
+
+	        		<h4><span id="error"class="label label-danger"></span></h4>
+
+	        		</div>
+
+					<div class="modal-footer">
+							<hr class="col-md-11">
+							<button type="button" data-dismiss="modal" class="btn">Cerrar</button>
+						<button class="btn btn-primary" id="editar_visita" type="submit">Guardar cambios</button>
+
+					</div>
+				</form>
+		    </div>
+
+		</div>
+	</div>
 	{% else %}
 	    <p>Visita no encontrada.</p>
 	{% endif %}
 
  	</div> 	<!-- /.row -->
+{% endblock %}
+
+
+{% block script %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.min.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+  		$("#error").hide();
+  		var visita;
+  		 //---------------editar -----------------------------
+		$("#editar").on( 'click', function (e) {
+			$("h4#tituloModal").text("Editar visita");
+			$("#error").hide();
+			$("#myModal").modal('show');
+
+		 } );
+
+		$("#formData").submit(function(e){
+			e.preventDefault();
+				editarVisita();
+
+		});
+
+		function editarVisita(){
+
+	  	var serializedData = $(this).serialize();
+	  	console.log(serializedData+"0sss")
+		$.ajax({
+				type: "POST",
+				// url:"/detail/edit_visita/",
+	            url: "{% url 'edit_visita' %}",
+				data: $("#formData").serialize(),
+				dataType: "json",
+				success: function(result){
+			console.log("peuebaasaaa14");
+
+					$(visita[0]).html(result.visita.nombre);
+					$(visita[1]).html(result.visita.foto);
+					$(visita[2]).html(result.visita.descripcion);
+					// $(visita[3]).html(result.visita.likes);
+					$("#myModal").modal('toggle');
+          	// notificacion('success','<strong>Guardando modificación</strong> espere por favor...',false,true);
+				},
+        error: function(result){
+			console.log(result.responseJSON);
+            $("#error").text(result.responseJSON.mensaje.nombre);
+            $("#error").show();
+        }
+		})
+};
+		// function notificacion(tipo,mensaje,allow_dismiss,progressbar){
+		// 	  var notify = $.notify({
+		// 	      message: mensaje
+		// 	    },{
+		// 	      // settings
+		// 	      element: 'body',
+		// 	      position: null,
+		// 	      type: tipo,
+		// 	      allow_dismiss: allow_dismiss,
+		// 	      showProgressbar: progressbar,
+		// 	      placement: {
+		// 	        from: "top",
+		// 	        align: "center"
+		// 	      },delay: 1000
+		// 	    });
+		// 	};
+    });
+  </script>
+
 {% endblock %}
 

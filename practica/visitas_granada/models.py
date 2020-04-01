@@ -23,6 +23,17 @@ class Visita(models.Model):
 	def __str__(self):  #For Python 2, use __str__ on Python 3
 		return self.nombre
 
+	# def borrarVisita(self,data):
+	# 	id=data.GET['nombre']
+	# 	cargavisita.remove({'nombre':id})
+	def modiVisita(self,data):
+		nombre=data['nombre']
+		descripcion= data['descripcion']
+		likes= data['likes']
+		foto= data['foto']
+		cargavisita.update_one({'nombre': nombre, 'descripcion':descripcion,'likes':likes,'foto':foto})
+		return cargavisita.find_one({'nombre':str(nombre)},{'nombre':0})
+
 class Comentario(models.Model):
 	visita = models.ForeignKey(Visita, on_delete=models.CASCADE)
 	texto = models.CharField(max_length=500)

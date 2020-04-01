@@ -57,8 +57,8 @@
 					</div>
 					<div class="card-footer">
 					 	<p>
-					 		<button class="w3-button w3-block w3-indigo"   data-toggle="tooltip" data-placement="top" title="Ver más"> 
-					 			<i class="fa fa-comment-o fa-lg"></i> <a href="{% url 'detail' visita.id %}">Detalle</a>
+					 		<button type='button' class="w3-button w3-block w3-indigo"   data-toggle="tooltip" data-placement="top" title="Ver más" onclick="location.href='{% url 'detail' visita.id %}'"> 
+					 			<!-- <i class="fa fa-info"></i> --> Detalle
 					 		</button>
 					 	</p>
 					
