@@ -1,12 +1,20 @@
 from django import forms
+from django.contrib.admin.widgets import AdminFileWidget
 from visitas_granada.models import Visita, Comentario
-# from django.contrib.auth.models import User
+from sorl.thumbnail import get_thumbnail
+import os
+
+
+# class AdminImageWidget(AdminFileWidget):
+#   def render(self, name, value, attrs=None):
+#     output = []
+#     if value and getattr(value, "url", None):
+#       t = get_thumbnail(value,'80x80')
+#       output.append('<img src="{}">'.format(t.url))
+#     output.append(super(AdminFileWidget, self).render(name, value, attrs))
+#     return mark_safe(u''.join(output))
 
 class VisitaForm(forms.ModelForm):
-	# nombre = forms.CharField(max_length=128, help_text="Visita")
-	# descripcion = forms.CharField(widget=forms.Textarea(attrs={'rows':3, 'cols': 50}),max_length=200, help_text="Introduce la descripción de la visita")
-	# foto = forms.FileInput()
-	# slug = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 	class Meta:
 		model = Visita
@@ -14,10 +22,10 @@ class VisitaForm(forms.ModelForm):
 		widgets = {
 			'nombre': forms.TextInput(attrs={'label':'Nombre', 'size': 40}),
 			'descripcion': forms.Textarea(attrs={'rows': 3, 'cols': 50}),
-			'foto': forms.FileInput()
+			# 'foto':  AdminImageWidget, Error al renderizar con  crispy_field
 		}
 
-		def ModificarVisita(self):
-			cargaVisita=Visita()
-			console.log("---------ModificarVisita-----------Forms---")
-			return cargaVisita.modiVisita(self.cleaned_data)
+	def ModificarVisita(self, visita_id):
+		cargaVisita=Visita()
+		return cargaVisita.modiVisita(self.cleaned_data, visita_id)
+

@@ -54,9 +54,9 @@
 	    			<div class="col-md-6 pl-md-5 pt-md-5">
 	    				<div class="row justify-content-start py-5">
 							<div class="col-md-12 heading-section ftco-animate">
-								<span class="subheading">{{visita.likes}} likes recibidos</span>
-								<h2 class="mb-4">  {{visita.nombre}}</h2>
-								<p>{{visita.descripcion}}</p>
+								<span class="subheading" id="likes">{{visita.likes}} likes recibidos</span>
+								<h2 class="mb-4" id="nombre" >  {{visita.nombre}}</h2>
+								<p id="descripcion">{{visita.descripcion}}</p>
 							</div>
 				        </div>
    	    				<div class="row justify-content-start py-5">
@@ -100,7 +100,7 @@
 	      	      		{% csrf_token %}
 	        			{{ form_visita|crispy }}
 
-	        		<h4><span id="error"class="label label-danger"></span></h4>
+	        			<h4><span id="error" class="badge badge-danger"></span></h4>
 
 	        		</div>
 
@@ -115,6 +115,28 @@
 
 		</div>
 	</div>
+
+
+	<div class="modal" id="modalDelete" tabindex="-1" role="dialog">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Eliminar Visita</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body" id="confirmMessage">
+		      
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" id="del_confirm">Aceptar</button>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+		      </div>
+	    	</div>
+	  	</div>
+	</div>
+
 	{% else %}
 	    <p>Visita no encontrada.</p>
 	{% endif %}
@@ -125,7 +147,8 @@
 
 {% block script %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.3/js/bootstrap-dialog.min.js"></script>
-
+  {% load static %}
+  <script src="{% static 'bootstrap-notify.js' %}"></script>
   <script type="text/javascript">
     $(document).ready(function() {
   		$("#error").hide();
@@ -145,48 +168,76 @@
 		});
 
 		function editarVisita(){
+			$("#errorCapitalize").hide();
+			$('textarea[name="descripcion"]').css("border-color", "#ced4da");
+			$.ajax({
+					type: "POST",
+					// url:"/detail/edit_visita/",
+		            url: "{% url 'edit_visita' visita.id %}",
+					data: $("#formData").serialize(),
+					dataType: "json",
+					success: function(result){
+	
+						//console.log(result.mensaje['nombre']);
+						
+						$("#nombre").html("<h2 id='nombre'>"+result.mensaje['nombre']+"</h2>");
+	 					$('#descripcion').html("<p id='descripcion'>"+result.mensaje['descripcion']+"</p>");					
+				
+						$("#myModal").modal('toggle');
+	          			notificacion('success','<strong>Guardando modificación</strong> espere por favor...',false,true,200);
+   						$("#errorCapitalize").hide();
+						$('textarea[name="descripcion"]').css("border-color", "#ced4da");
 
-	  	var serializedData = $(this).serialize();
-	  	console.log(serializedData+"0sss")
-		$.ajax({
-				type: "POST",
-				// url:"/detail/edit_visita/",
-	            url: "{% url 'edit_visita' %}",
-				data: $("#formData").serialize(),
-				dataType: "json",
-				success: function(result){
-			console.log("peuebaasaaa14");
+					},
+			        error: function(result){
+						// console.log("error al guardar");
+						$('textarea[name="descripcion"]').css("border-color", "red");
+						$('textarea[name="descripcion"]').after('<h5><span id="errorCapitalize" class="badge badge-danger" style="white-space:normal"</span></h5>');
+			        	// alert(JSON.stringify(result.responseJSON.mensaje))
+			            $("#errorCapitalize").text(result.responseJSON.mensaje.descripcion);
+			            $("#errorCapitalize").show();
+			       	 }
+				})
+			};
 
-					$(visita[0]).html(result.visita.nombre);
-					$(visita[1]).html(result.visita.foto);
-					$(visita[2]).html(result.visita.descripcion);
-					// $(visita[3]).html(result.visita.likes);
-					$("#myModal").modal('toggle');
-          	// notificacion('success','<strong>Guardando modificación</strong> espere por favor...',false,true);
-				},
-        error: function(result){
-			console.log(result.responseJSON);
-            $("#error").text(result.responseJSON.mensaje.nombre);
-            $("#error").show();
+		var MESSAGE_STRING_CONST = "  <p>¿Estas seguro que desea eliminar esta visita?</p>";
+
+
+		$("#borrar").on( 'click', function (e) {
+			$("#modalDelete").modal('show');
+    			confirmDialog(MESSAGE_STRING_CONST, function(){
+	          	// console.log("deleted!");
+	          	var url = "{% url 'del_visita' visita.id %}";
+	          	document.location.href = "{% url 'del_visita' visita.id %}";
+    		});
+    	});
+
+        function confirmDialog(message, onConfirm){
+    	    var fClose = function(){
+    			  modal.modal("hide");
+    	    };
+    	    var modal = $("#confirmModal");
+    	    modal.modal("show");
+    	    $("#confirmMessage").empty().append(message);
+    	    $("#del_confirm").unbind().one('click', onConfirm).one('click', fClose);
         }
-		})
-};
-		// function notificacion(tipo,mensaje,allow_dismiss,progressbar){
-		// 	  var notify = $.notify({
-		// 	      message: mensaje
-		// 	    },{
-		// 	      // settings
-		// 	      element: 'body',
-		// 	      position: null,
-		// 	      type: tipo,
-		// 	      allow_dismiss: allow_dismiss,
-		// 	      showProgressbar: progressbar,
-		// 	      placement: {
-		// 	        from: "top",
-		// 	        align: "center"
-		// 	      },delay: 1000
-		// 	    });
-		// 	};
+
+		function notificacion(tipo,mensaje,allow_dismiss,progressbar, delay){
+			  var notify = $.notify({
+			      message: mensaje
+			    },{
+			      // settings
+			      element: 'body',
+			      position: null,
+			      type: tipo,
+			      allow_dismiss: allow_dismiss,
+			      showProgressbar: progressbar,
+			      placement: {
+			        from: "top",
+			        align: "center"
+			      },delay: delay
+			    });
+			};
     });
   </script>
 

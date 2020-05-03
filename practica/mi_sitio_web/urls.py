@@ -23,8 +23,9 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('<int:visita_id>/', views.detalle_visita, name='detail'),
     path('add_visita/', views.add_visita, name='add_visita'),
-    
-    path('post/ajax/visita/', views.edit_visita, name='edit_visita'),
+    path('post/ajax/visita/<int:visita_id>/', views.edit_visita, name='edit_visita'),
+    path('delete/<int:visita_id>/', views.del_visita, name='del_visita'),
+
 
 
     # path(r'^detalle_visita/(?P<visita_name_slug>[\w\-]+)/$', views.detalle_visita, name='Detalle'),

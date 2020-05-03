@@ -38,12 +38,10 @@
 					{% thumbnail visita.foto "200x180" crop="center" as im %}
 					    
 					    <img class="card-img-top"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" >
-					{% empty %}
-					    <p>No image</p>
-					<!-- <img class="card-img-top" src="{{ MEDIA_URL }}{{ visita.foto.name }}" width="{{ visita.foto.width }}" height="{{ visita.foto.height }}" alt="{{ visita.foto.name }}"> -->
+						{% empty %}
+					    	<p>No image</p>
 					{% endthumbnail %}
-					<!-- <img class="card-img-top" src="{{ MEDIA_URL }}{{ visita.foto.name }}" alt="{{ visita.foto.name }}"> -->
-					<!-- <a href="#"></a> -->
+					
 					<div class="card-body">
 						<h4 class="card-title">
 						  <!--<a href="#"></a>-->
