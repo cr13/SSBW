@@ -60,6 +60,8 @@
 							</div>
 				        </div>
    	    				<div class="row justify-content-start py-5">
+		                  {% if user.is_authenticated %}
+
    	    					<div class="col-sm-6">
 						      	<button id="editar" type='button' class="w3-button w3-block w3-indigo"   data-toggle="tooltip" data-placement="top" title="Ver más" > 
 					 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
@@ -73,7 +75,19 @@
 					 		</button>
 						     </div>
 
-   	    				
+		                  {% else %}
+		                  	<div class="col-sm-6">
+						      	<a href="{% url 'login' %}" class="w3-button w3-block w3-indigo" > 
+					 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar
+					 			</a>
+		                     </div>
+						     <!-- /.col-sm-6 -->
+						     <div class="col-sm-6">
+						       <a href="{% url 'login' %}" class="w3-button w3-block w3-indigo" > 
+					 				<i class="fa fa-trash" aria-hidden="true"></i> Eliminar
+					 			</a>
+						     </div>
+		                  {% endif %}
 					 	</div>
 			        </div>
 	        	</div>

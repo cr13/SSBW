@@ -26,9 +26,16 @@ SECRET_KEY = 'hrp04eb($_)r9y*g%va_rtb0y-7!vh)#9l3j&))0uru+d*=el7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+REGISTRATION_OPEN = True                # If True, users can register
+ACCOUNT_ACTIVATION_DAYS = 1     # One-week activation window; you may, of course, use a different value.
+REGISTRATION_AUTO_LOGIN = True  # If True, the user will be automatically logged in.
+LOGIN_REDIRECT_URL = '/'      # The page you want users to arrive at after they successful log in
+LOGOUT_REDIRECT_URL = '/'       
+LOGIN_URL = '/accounts/login/'  # The page users are directed to if they are not logged in,
 
 ALLOWED_HOSTS = ['*']
 
+ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window
 
 # Application definition
 

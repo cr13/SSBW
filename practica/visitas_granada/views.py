@@ -6,6 +6,8 @@ from visitas_granada.forms import VisitaForm
 import json
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 # Create your views here.
@@ -26,6 +28,9 @@ def detalle_visita(request, visita_id):
 	form_visita = VisitaForm(instance=visita)
 	return render(request, 'visitas_granada/detalle_visita.html', {'visita': visita, 'listado_visitas': listado_visitas, 'form_visita':form_visita})
 
+@login_required
+@staff_member_required
+@permission_required('polls.add_choice', raise_exception=True)
 def add_visita(request):
 
 	if request.method == 'POST':   # de vuelta con los datos
@@ -49,7 +54,9 @@ def add_visita(request):
 
 	return render(request, "visitas_granada/add_visita.html", context)
 
-
+@login_required
+@staff_member_required
+@permission_required('polls.add_choice', raise_exception=True)
 def edit_visita(request, visita_id):
     # if this is a POST request we need to process the form data
 
@@ -90,6 +97,9 @@ def edit_visita(request, visita_id):
     # return render(request, "visitas_granada/edit_visita.html", context)
     return JsonResponse({"error": ""}, status=400)
 
+@login_required
+@staff_member_required
+@permission_required('polls.add_choice', raise_exception=True)
 def del_visita(request, visita_id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':

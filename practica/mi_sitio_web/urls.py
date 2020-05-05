@@ -18,6 +18,11 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 from visitas_granada import views
+from django.contrib import admin
+
+from django.contrib.auth import update_session_auth_hash
+from django.views.generic.base import TemplateView # new
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -25,12 +30,11 @@ urlpatterns = [
     path('add_visita/', views.add_visita, name='add_visita'),
     path('post/ajax/visita/<int:visita_id>/', views.edit_visita, name='edit_visita'),
     path('delete/<int:visita_id>/', views.del_visita, name='del_visita'),
-
-
-
-    # path(r'^detalle_visita/(?P<visita_name_slug>[\w\-]+)/$', views.detalle_visita, name='Detalle'),
-    # path('articles/<slug:title>/', views.article, name='article-detail'),
+    
+    path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
+    path('', TemplateView.as_view(template_name='home.html'), name='home'), # new
+
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
