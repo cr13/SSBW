@@ -7,10 +7,11 @@ import os
 from django.core.exceptions import ValidationError
 
 def validate_capitalized(value):
-	if value != value.capitalize():
+	primera_palabra = value.split(' ', 1)[0] 
+	if primera_palabra != primera_palabra.capitalize():
 		raise ValidationError('La primera letra de la descripción debe ser mayuscula! Ej: %(value)s',
 							  code='invalid',
-							  params={'value': value.capitalize()})
+							  params={'value': primera_palabra.capitalize()})
 
 # Create your models here.
 # visitas_granada/model.py
@@ -35,16 +36,18 @@ class Visita(models.Model):
 		visita_obj.delete()
 	
 	def modiVisita(self, data, visita_id):
-
+		print(data)
 		nombre=data['nombre']
 		descripcion= data['descripcion']
 		# likes= data['likes']
 		foto= data['foto']
 		visita_obj = Visita.objects.get(id=visita_id)
+
 		if not foto:
 			foto = visita_obj.foto
 		visita_obj.nombre = nombre
 		visita_obj.descripcion = descripcion
+
 		visita_obj.foto = foto
 		visita_obj.save()
 		return visita_obj

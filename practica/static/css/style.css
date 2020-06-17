@@ -18,9 +18,14 @@ header {
  overflow: hidden;*/
 }
 
+.pt-md-5, .py-md-5 {
+    padding-top: 0rem!important;
+}
+
+  /*display: block;*/
+
 .heading-section .subheading {
   font-size: 12px;
-  display: block;
   font-weight: 500;
   color: #2b98f0;
   text-transform: uppercase;
@@ -29,8 +34,9 @@ header {
 .heading-section h2 {
   font-size: 44px;
   font-weight: 300; }
-  @media (max-width: 767.98px) {
-    .heading-section h2 {
+  
+@media (max-width: 767.98px) {
+  .heading-section h2 {
       font-size: 28px; } }
 
 .heading-section.heading-section-white .subheading {

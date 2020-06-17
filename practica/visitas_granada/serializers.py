@@ -13,3 +13,8 @@ class ComentarioSerializer(serializers.HyperlinkedModelSerializer):
         model = Comentario
         fields = ('visita', 'texto')
 
+class GestionLikesSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Visita
+        fields = ('likes',)
+

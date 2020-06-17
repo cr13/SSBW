@@ -53,8 +53,18 @@
 	    			</div>
 	    			<div class="col-md-6 pl-md-5 pt-md-5">
 	    				<div class="row justify-content-start py-5">
-							<div class="col-md-12 heading-section ftco-animate">
-								<span class="subheading" id="likes">{{visita.likes}} likes recibidos</span>
+						    <div class="col-md-12 heading-section ftco-animate"> 
+								<div class="d-flex flex-row bd-highlight mb-3">
+
+									<div class="p-2 bd-highlight"><span class="subheading" id="likestotal">{{visita.likes}} </span><span class="subheading"> likes</span></div>
+									<div class="p-2 bd-highlight">
+										<span id="like_up" class="fa fa-thumbs-o-up" aria-hidden="true"></span>
+									</div>
+									<div class="p-2 bd-highlight">
+										<span id="like_down" class="fa fa-thumbs-o-down" aria-hidden="true"></span>
+									</div>
+								</div>
+					 			
 								<h2 class="mb-4" id="nombre" >  {{visita.nombre}}</h2>
 								<p id="descripcion">{{visita.descripcion}}</p>
 							</div>
@@ -167,7 +177,50 @@
     $(document).ready(function() {
   		$("#error").hide();
   		var visita;
-  		 //---------------editar -----------------------------
+  		var likes_bd = "{{visita.likes}}";
+	    likes = Number(likes_bd);
+	    var liketotal = document.getElementById('likestotal');
+	    liketotal.innerHTML = likes;
+
+		$("#like_up, #like_down").css('cursor', 'pointer'); 
+		$("#like_up").on( 'click', function (e) {
+			likes += 1;
+            //liketotal.innerHTML = likes;
+            send_value(likes);
+			
+		 });
+		$("#like_down").on( 'click', function (e) {
+			likes -= 1;
+            //liketotal.innerHTML = likes;
+			send_value(likes);
+
+		 } );
+
+
+    	function send_value(value) {
+
+			$.ajax({
+				'url': "{% url 'likes' visita.id %}",      // el end-point
+				'type': 'PUT',
+				'dataType': 'json',                        // Content-Type de vuelta
+				'data': JSON.stringify({'likes': value}),  // el api espera un string json
+				'success': function (data)  {              // call-back, se ejecuta con el response
+					console.log(data + " success send");
+					liketotal.innerHTML = likes;
+				},
+				error: function(result){
+					alert(JSON.stringify(result))
+					// console.log(result.responseJSON + " error send");                
+                    
+	                notificacion('danger','<strong>Error al guardar el like</strong> intentelo de nuevo mas tarde',false,false,200);
+
+			    }
+			})
+		}
+
+
+  		//---------------editar -----------------------------
+
 		$("#editar").on( 'click', function (e) {
 			$("h4#tituloModal").text("Editar visita");
 			$("#error").hide();
@@ -195,7 +248,7 @@
 						//console.log(result.mensaje['nombre']);
 						
 						$("#nombre").html("<h2 id='nombre'>"+result.mensaje['nombre']+"</h2>");
-	 					$('#descripcion').html("<p id='descripcion'>"+result.mensaje['descripcion']+"</p>");					
+	 					$('#descripcion').html("<p id='descripcion'>"+result.mensaje['descripcion']+"</p>");				
 				
 						$("#myModal").modal('toggle');
 	          			notificacion('success','<strong>Guardando modificación</strong> espere por favor...',false,true,200);
@@ -225,6 +278,7 @@
 	          	document.location.href = "{% url 'del_visita' visita.id %}";
     		});
     	});
+
 
         function confirmDialog(message, onConfirm){
     	    var fClose = function(){

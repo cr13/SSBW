@@ -150,3 +150,4 @@ ip = socket.gethostbyname(socket.gethostname())
 INTERNAL_IPS += [ip[:-1] + '1']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+

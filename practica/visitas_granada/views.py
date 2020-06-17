@@ -11,7 +11,10 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets, permissions
 from rest_framework.parsers import JSONParser
-from visitas_granada.serializers import VisitaSerializer, ComentarioSerializer
+from visitas_granada.serializers import VisitaSerializer, ComentarioSerializer, GestionLikesSerializer
+
+import logging
+
 
 # Create your views here.
 
@@ -26,7 +29,7 @@ def index(request):
 
 
 def detalle_visita(request, visita_id):
-	listado_visitas = Visita.objects.order_by('-likes')[:6]
+	listado_visitas = Visita.objects.order_by('-likes')[:10]
 	visita = get_object_or_404(Visita, pk=visita_id)
 	form_visita = VisitaForm(instance=visita)
 	return render(request, 'visitas_granada/detalle_visita.html', {'visita': visita, 'listado_visitas': listado_visitas, 'form_visita':form_visita})
@@ -125,4 +128,22 @@ class ComentarioViewSet(viewsets.ModelViewSet):
     serializer_class = ComentarioSerializer    
     queryset = Comentario.objects.all()
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+@csrf_exempt
+def likes_gestion(request, visita_id):
+    try:
+        visita = Visita.objects.get(id=visita_id)
+    except Visita.DoesNotExist:        
+        return HttpResponse(status=404)
+    
+    if request.method == 'GET':
+        serializer = GestionLikesSerializer(visita)
+        return JsonResponse(serializer.data)
+    elif request.method == 'PUT':
+        data = JSONParser().parse(request)
+        serializer = GestionLikesSerializer(visita, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status=400)
 

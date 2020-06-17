@@ -29,9 +29,7 @@ router = routers.DefaultRouter()
 router.register(r'apivisitas', views.VisitaViewSet)
 router.register(r'apicomentarios', views.ComentarioViewSet)
 
-urlpatterns = router.urls
-
-urlpatterns += [
+urlpatterns = [
     path('', views.index, name='index'),
     path('<int:visita_id>/', views.detalle_visita, name='detail'),
     path('add_visita/', views.add_visita, name='add_visita'),
@@ -40,7 +38,10 @@ urlpatterns += [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'), # new
+    path('api/', include(router.urls)),    
     path('api-auth/', include('rest_framework.urls')),
+    path('api/likes/<int:visita_id>', views.likes_gestion, name='likes'),
+
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
