@@ -8,7 +8,10 @@ from django.core import serializers
 from django.forms.models import model_to_dict
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required, permission_required
-
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets, permissions
+from rest_framework.parsers import JSONParser
+from visitas_granada.serializers import VisitaSerializer, ComentarioSerializer
 
 # Create your views here.
 
@@ -112,3 +115,13 @@ def del_visita(request, visita_id):
         vistitas.borrarVisita(visita_id)
     return redirect('index')
     # return JsonResponse({'mensaje':True})
+
+class VisitaViewSet(viewsets.ModelViewSet):
+    serializer_class = VisitaSerializer
+    queryset = Visita.objects.all().order_by('nombre')
+    
+
+
+class ComentarioViewSet(viewsets.ModelViewSet):
+    serializer_class = ComentarioSerializer    
+    queryset = Comentario.objects.all()

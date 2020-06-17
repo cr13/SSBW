@@ -22,9 +22,16 @@ from django.contrib import admin
 
 from django.contrib.auth import update_session_auth_hash
 from django.views.generic.base import TemplateView # new
+from rest_framework import routers
+# from rest_framework_simplejwt import views as jwt_views
 
+router = routers.DefaultRouter()
+router.register(r'apivisitas', views.VisitaViewSet)
+router.register(r'apicomentarios', views.ComentarioViewSet)
 
-urlpatterns = [
+urlpatterns = router.urls
+
+urlpatterns += [
     path('', views.index, name='index'),
     path('<int:visita_id>/', views.detalle_visita, name='detail'),
     path('add_visita/', views.add_visita, name='add_visita'),
