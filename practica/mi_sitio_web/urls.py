@@ -37,10 +37,11 @@ urlpatterns += [
     path('add_visita/', views.add_visita, name='add_visita'),
     path('post/ajax/visita/<int:visita_id>/', views.edit_visita, name='edit_visita'),
     path('delete/<int:visita_id>/', views.del_visita, name='del_visita'),
-    
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='home.html'), name='home'), # new
+    path('api-auth/', include('rest_framework.urls')),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

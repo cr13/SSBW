@@ -119,9 +119,10 @@ def del_visita(request, visita_id):
 class VisitaViewSet(viewsets.ModelViewSet):
     serializer_class = VisitaSerializer
     queryset = Visita.objects.all().order_by('nombre')
-    
-
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]  
 
 class ComentarioViewSet(viewsets.ModelViewSet):
     serializer_class = ComentarioSerializer    
     queryset = Comentario.objects.all()
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
