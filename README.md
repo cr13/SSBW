@@ -1,16 +1,10 @@
-# SSBW Tarea 6
+# SSBW Tareas 7 y 8
 
-**API Rest**
+**jQuery & AJAX**
 
-- Instalación de djangorestframework versión 3.11.0
-- Rutas de acceso:
-  - http://localhost:8000/apivisitas/
-  - http://localhost:8000/apicomentarios/
-- Referencias seguidas:
-  - https://www.django-rest-framework.org/tutorial/1-serialization/
-  - https://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/#adding-required-permissions-to-views
-  - https://www.youtube.com/watch?v=2ntdfVTdt_g
 
-**Optativo: Incluir autentificación con tokens jwt**
+- Se añade los iconos de incrementar likes y disminuir, además del modo lectura de noche y día
+- Los likes se almacenan mediante Ajax y la api rest django de la tarea anterior.
+- Para el modo noche se ha utilizado la hoja de estilo dark-mode.css obtenida del siguiente ejemplo https://www.jqueryscript.net/other/dark-mode-bootstrap.html
 
 
