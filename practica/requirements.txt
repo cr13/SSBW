@@ -5,3 +5,5 @@ django-debug-toolbar==2.2
 django-crispy-forms==1.9.0
 django-messages-to-bootstrap-notify==0.2.6
 djangorestframework==3.11.0
+requests
+python-decouple

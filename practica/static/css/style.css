@@ -22,6 +22,12 @@ header {
     padding-top: 0rem!important;
 }
 
+ #ubi_visita { 
+    width: 100%;
+    min-height: 300px;
+    box-shadow: 5px 5px 5px #888;
+ }
+
   /*display: block;*/
 
 .heading-section .subheading {
