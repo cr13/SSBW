@@ -14,3 +14,14 @@
 [data-theme="dark"] .bg-black {
   background-color: #eee !important;
 }
+
+[data-theme="dark"] .list-group-item{
+  background-color: #0a0a0a !important;
+  border-color: #333 !important;
+}
+
+[data-theme="dark"] .card{
+  background-color: #0a0a0a !important;
+  border-color: #333 !important;
+}
+

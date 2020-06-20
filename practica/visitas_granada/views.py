@@ -24,9 +24,11 @@ logger = logging.getLogger(__name__)
 
 def index(request):
     listado_visitas = Visita.objects.order_by('-likes')[:6]
+    numero_visitas = Visita.objects.all().count()
     template = loader.get_template('visitas_granada/index.html')
     context = {
         'listado_visitas': listado_visitas,
+        'numero_visitas': numero_visitas,
     }
     return HttpResponse(template.render(context, request))
 
