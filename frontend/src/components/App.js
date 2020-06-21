@@ -3,7 +3,7 @@ import '../css/App.css';
 import ListaVisitas from './lista_visitas';
 import Visita from './visita' 
 
-import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 
 class App extends Component {
