@@ -24,6 +24,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./django/static:/var/www/static     # para los archivos static
+      - ./django/media:/var/www/media     # para los archivos media
       - ./log/nginx/:/var/log/nginx/      
     ports:
       - "81:81"
