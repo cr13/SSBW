@@ -36,7 +36,7 @@ class visita extends React.Component {
 
         this.setState({
               visita: {
-                ['likes']: this.state.visita.likes + value 
+                'likes': this.state.visita.likes + value 
               }
             })   
         this.componentWillMount();
@@ -57,7 +57,7 @@ class visita extends React.Component {
     
                             <div className="img d-flex align-items-center justify-content-center py-md-0">
                                 
-                                <img className="card-img-top"  src={this.state.visita.foto} width="200" height="400" />
+                                <img className="card-img-top"  src={this.state.visita.foto} width="200" height="400" alt={this.state.visita.foto}/>
                                 
                             </div>
                         </div>
