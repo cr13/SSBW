@@ -1,0 +1,74 @@
+{% extends 'visitas_granada/plantilla.html' %}
+
+{% load thumbnail %}
+
+
+{% block header_page %}
+	
+	<div class="container text-center">
+	  <h1>Visita en Granada</h1>
+	  <p class="lead">
+			{% if numero_visitas %}
+			    Se dispone de {{ numero_visitas }}
+			{% else %}
+			    0
+			{% endif %}
+	   visitas disponibles</p>
+	</div>
+	
+{% endblock %}
+
+
+{% block menu_izq %}
+	<h1 class="my-4">Tipo de visita</h1>
+	<div class="list-group">
+	  <a href="#" class="list-group-item">Category 1</a>
+	  <a href="#" class="list-group-item">Category 2</a>
+	  <a href="#" class="list-group-item">Category 3</a>
+	</div>
+{% endblock %}
+
+{% block cuerpo %}
+
+    <div class="row">
+	{% if listado_visitas %}
+	    {% for visita in listado_visitas %}
+			<div class="col-lg-4 col-md-6 mb-4">
+				<div class="card h-100">
+					{% thumbnail visita.foto "200x180" crop="center" as im %}
+					    
+					    <img class="card-img-top"  src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" >
+						{% empty %}
+					    	<p>No image</p>
+					{% endthumbnail %}
+					
+					<div class="card-body">
+						<h4 class="card-title">
+						  <!--<a href="#"></a>-->
+						  {{visita.nombre}}
+						</h4>
+						<h5>$24.99</h5>
+						<p class="card-text">
+							{{visita.descripcion}}
+						</p>
+
+					</div>
+					<div class="card-footer">
+					 	<p>
+					 		<button type='button' class="w3-button w3-block w3-indigo"   data-toggle="tooltip" data-placement="top" title="Ver más" onclick="location.href='{% url 'detail' visita.id %}'"> 
+					 			<!-- <i class="fa fa-info"></i> --> Detalle
+					 		</button>
+					 	</p>
+					
+					</div>
+				</div>
+			</div>
+	    {% endfor %}
+	{% else %}
+	    <p>No hay visitas disponibles.</p>
+	{% endif %}
+
+ 	</div> 	<!-- /.row -->
+
+{% endblock %}
+
