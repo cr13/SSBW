@@ -21,7 +21,7 @@ class ListaVisitas extends Component {
           <div  key={item.id} className="col-lg-4 col-md-6 mb-4">
             <div className="card h-100">
                    
-                  <img className="card-img-top" src={item.foto} width="200" height="180" />
+                  <img className="card-img-top" src={item.foto} width="200" height="180" alt={item.foto}/>
               
               <div className="card-body">
                 <h4 className="card-title">   
