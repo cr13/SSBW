@@ -1,22 +1,12 @@
-# SSBW Tarea 9
+# Visitas_granada  desarrollada con Django & React
 
-**API para MAPS**
+Se va a reutilizar la aplicación creada en Django, de forma que se use Django en el backend  y React para la aplicación del frontend.
 
-- En esta tarea añadiremos un mapa en la página de detalle de cada visita.
-- Se ha utilizado  open street map con la librería leaftlet
-  - Libreria leaftlet
-    - https://leafletjs.com/download.html
-  - Cómo crear un mapa con Leaflet
-    - https://mappinggis.com/2013/06/como-crear-un-mapa-con-leaflet/
+## Para iniciar la aplicación
 
-  - Api utilizada para obtener latitud y longitud de la visita
-    -https://nominatim.openstreetmap.org/search.php?q=San+Miguel+Alto++granada&polygon_geojson=1&viewbox=
-    
-- También se han añadido los comentarios recibidos en cada visita
+1. `docker-compose build`
+1. `docker-compose up`
 
-**Optativo: Bot Telegram**
-
-- Se ha creado un bot y en la aplicación se ha añadido una función para enviar notificaciones al bot.
-  - Tutorial seguido: https://www.marcodena.it/blog/telegram-logging-handler-for-python-java-bash/
-
-
+1. Para acceder a las aplicaciones:
+  - [http://127.0.0.1:8000](http://127.0.0.1:8000) la aplicación con Django
+  - [http://127.0.0.1:3000](http://127.0.0.1:3000) la aplicación con React
