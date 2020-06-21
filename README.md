@@ -1,4 +1,8 @@
-# Visitas_granada  desarrollada con Django & React
+# Visitas_granada
+
+## Tareas 10 y 11  
+
+### Django & React & Despliegue con nginx
 
 Se va a reutilizar la aplicación creada en Django, de forma que se use Django en el backend  y React para la aplicación del frontend.
 
