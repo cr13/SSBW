@@ -4,7 +4,7 @@ class visita extends React.Component {
  
     constructor(props) {
         super(props)
-        this.state = { visita: {} }
+        this.state = { visita: {}, likes: 0 }
     } 
     
     
@@ -15,7 +15,7 @@ class visita extends React.Component {
           })
           .then((data) => {
               console.log(data);
-            this.setState({ visita: data })
+            this.setState({ visita: data , likes: data.likes})
         })
       }
 
@@ -35,12 +35,10 @@ class visita extends React.Component {
           });
 
         this.setState({
-              visita: {
-                'likes': this.state.visita.likes + value 
-              }
+                'likes': this.state.likes + value 
+              
             })   
-        this.componentWillMount();
-        this.render();
+
         
     }
 
